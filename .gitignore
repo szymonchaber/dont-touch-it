@@ -1,0 +1,17 @@
+*.iml
+.gradle
+/local.properties
+.DS_Store
+/captures
+.externalNativeBuild
+/**/bin
+/**/gen
+/**/signing.properties
+/**/projectRestoreData
+/**/test-reports
+/**/test-report-html
+/**/build
+**/.idea/*
+out/
+captures/
+.gradletasknamecache

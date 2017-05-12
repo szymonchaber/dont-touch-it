@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Don\'t touch it!</string>
+    <string name="no_permission_no_overlay">Nie można uruchomić warstwy bez uprawnienia</string>
+</resources>
