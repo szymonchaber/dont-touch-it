@@ -46,16 +46,6 @@ public class OverlayService extends Service {
 
     }
 
-    private void switchState() {
-        if (frameLayout.getVisibility() == View.GONE) {
-            showNotification("Disable blocking");
-            frameLayout.setVisibility(View.VISIBLE);
-        } else {
-            showNotification("Enable blocking");
-            frameLayout.setVisibility(View.GONE);
-        }
-    }
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -68,6 +58,22 @@ public class OverlayService extends Service {
                 .setContentIntent(notificationClickedIntent())
                 .setDeleteIntent(notificationDeletedIntent());
         createInvisibleOverlayView();
+    }
+
+    @Override
+    public void onDestroy() {
+        if (frameLayout != null) windowManager.removeView(frameLayout);
+        super.onDestroy();
+    }
+
+    private void switchState() {
+        if (frameLayout.getVisibility() == View.GONE) {
+            showNotification("Disable blocking");
+            frameLayout.setVisibility(View.VISIBLE);
+        } else {
+            showNotification("Enable blocking");
+            frameLayout.setVisibility(View.GONE);
+        }
     }
 
     private PendingIntent notificationClickedIntent() {
@@ -96,12 +102,6 @@ public class OverlayService extends Service {
 
         frameLayout.setVisibility(View.GONE);
         windowManager.addView(frameLayout, params);
-    }
-
-    @Override
-    public void onDestroy() {
-        if (frameLayout != null) windowManager.removeView(frameLayout);
-        super.onDestroy();
     }
 
     private void showNotification(String message) {

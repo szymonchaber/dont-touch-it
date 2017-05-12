@@ -10,12 +10,24 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    public final static int REQUEST_CODE = 1;
+    private static final int REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         showOverlayIfPossible();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE) {
+            if (canDrawOverlays()) {
+                startOverlayService();
+            } else {
+                Toast.makeText(this, R.string.no_permission_no_overlay, Toast.LENGTH_SHORT).show();
+            }
+            finish();
+        }
     }
 
     private void showOverlayIfPossible() {
@@ -31,18 +43,6 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean permissionRequestRequired() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !canDrawOverlays();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CODE) {
-            if (canDrawOverlays()) {
-                startOverlayService();
-            } else {
-                Toast.makeText(this, R.string.no_permission_no_overlay, Toast.LENGTH_SHORT).show();
-            }
-            finish();
-        }
     }
 
     private boolean canDrawOverlays() {
