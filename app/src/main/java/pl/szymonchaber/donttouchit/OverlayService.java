@@ -30,7 +30,7 @@ public class OverlayService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        showNotification("Enable blocking");
+        showNotification(getString(R.string.enable_blocking));
         if ((intent != null)) {
             String action = intent.getAction();
 
@@ -53,7 +53,7 @@ public class OverlayService extends Service {
 
         notificationBuilder = new Notification.Builder(this)
                 .setSmallIcon(android.R.drawable.btn_star)
-                .setContentTitle("Don't touch!")
+                .setContentTitle(getString(R.string.app_name))
                 .setContentIntent(notificationClickedIntent())
                 .setDeleteIntent(notificationDeletedIntent());
         createInvisibleOverlayView();
@@ -67,10 +67,10 @@ public class OverlayService extends Service {
 
     private void switchState() {
         if (layout.getVisibility() == View.GONE) {
-            showNotification("Disable blocking");
+            showNotification(getString(R.string.disable_blocking));
             layout.setVisibility(View.VISIBLE);
         } else {
-            showNotification("Enable blocking");
+            showNotification(getString(R.string.enable_blocking));
             layout.setVisibility(View.GONE);
         }
     }
