@@ -50,8 +50,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startOverlayService() {
-        Intent intent = new Intent(this, OverlayService.class);
-        startService(intent);
+        startService(new Intent(this, OverlayService.class));
     }
 }
 

@@ -10,7 +10,6 @@ import android.os.IBinder;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
 
 
 public class OverlayService extends Service {
@@ -20,7 +19,7 @@ public class OverlayService extends Service {
     private static final String DELETION = "DELETION";
 
     private WindowManager windowManager;
-    private FrameLayout frameLayout;
+    private BackBlockingFrameLayout layout;
     private Notification.Builder notificationBuilder;
     private NotificationManager notificationManager;
 
@@ -62,17 +61,17 @@ public class OverlayService extends Service {
 
     @Override
     public void onDestroy() {
-        if (frameLayout != null) windowManager.removeView(frameLayout);
+        if (layout != null) windowManager.removeView(layout);
         super.onDestroy();
     }
 
     private void switchState() {
-        if (frameLayout.getVisibility() == View.GONE) {
+        if (layout.getVisibility() == View.GONE) {
             showNotification("Disable blocking");
-            frameLayout.setVisibility(View.VISIBLE);
+            layout.setVisibility(View.VISIBLE);
         } else {
             showNotification("Enable blocking");
-            frameLayout.setVisibility(View.GONE);
+            layout.setVisibility(View.GONE);
         }
     }
 
@@ -89,19 +88,19 @@ public class OverlayService extends Service {
     }
 
     private void createInvisibleOverlayView() {
-        frameLayout = new FrameLayout(this);
+        layout = new BackBlockingFrameLayout(this);
 
         WindowManager.LayoutParams params = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.MATCH_PARENT,
                 WindowManager.LayoutParams.MATCH_PARENT,
                 WindowManager.LayoutParams.TYPE_PHONE,
-                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 PixelFormat.TRANSLUCENT);
 
         params.gravity = Gravity.CENTER;
 
-        frameLayout.setVisibility(View.GONE);
-        windowManager.addView(frameLayout, params);
+        layout.setVisibility(View.GONE);
+        windowManager.addView(layout, params);
     }
 
     private void showNotification(String message) {
