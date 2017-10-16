@@ -17,7 +17,7 @@ import android.view.WindowManager;
 
 public class OverlayService extends Service implements SensorEventListener {
 
-    public static final int BLOCKING_LIGHT_VALUE = 10;
+    public static final int BLOCKING_PROXIMITY = 8;
     private static final int ID = 1;
     private static final String CLICK = "CLICK";
     private static final String DELETION = "DELETION";
@@ -64,7 +64,7 @@ public class OverlayService extends Service implements SensorEventListener {
                 .setDeleteIntent(notificationDeletedIntent());
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+        lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
         createInvisibleOverlayView();
     }
 
@@ -119,9 +119,9 @@ public class OverlayService extends Service implements SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        float light = event.values[0];
+        float proximity = event.values[0];
 
-        if (light <= BLOCKING_LIGHT_VALUE) {
+        if (proximity < BLOCKING_PROXIMITY) {
             if (!isScreenBlocked()) {
                 blockScreen();
                 Log.d(TAG, "onSensorChanged: blocked view");
@@ -132,7 +132,7 @@ public class OverlayService extends Service implements SensorEventListener {
                 Log.d(TAG, "onSensorChanged: unblocked view");
             }
         }
-        Log.d(TAG, "onSensorChanged: " + light);
+        Log.d(TAG, "onSensorChanged: " + proximity);
     }
 
     @Override
