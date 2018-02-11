@@ -4,33 +4,25 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.os.IBinder;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
 import pl.szymonchaber.donttouchit.R;
 
-public class OverlayService extends Service implements SensorEventListener {
+public class OverlayService extends Service implements OnShouldBlockListener {
 
     public static final int BLOCKING_PROXIMITY = 8;
     private static final int ID = 1;
     private static final String CLICK = "CLICK";
     private static final String DELETION = "DELETION";
-    private static final String TAG = "OverlayService";
     private WindowManager windowManager;
     private BackBlockingFrameLayout layout;
     private Notification.Builder notificationBuilder;
     private NotificationManager notificationManager;
 
-    private SensorManager sensorManager;
-    private Sensor lightSensor;
+    private BlockingManager blockingManager;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -41,17 +33,19 @@ public class OverlayService extends Service implements SensorEventListener {
     public int onStartCommand(Intent intent, int flags, int startId) {
         showNotification(getString(R.string.enable_blocking));
         if (intent != null) {
-            String action = intent.getAction();
-
-            if (CLICK.equals(action)) {
-                switchState();
-            } else if (DELETION.equals(action)) {
-                notificationManager.cancelAll();
-                stopBlocking();
-                stopSelf();
-            }
+            consumeAction(intent.getAction());
         }
         return super.onStartCommand(intent, flags, startId);
+    }
+
+    private void consumeAction(String action) {
+        if (CLICK.equals(action)) {
+            toggleBlocking();
+        } else if (DELETION.equals(action)) {
+            stopBlocking();
+            notificationManager.cancelAll();
+            stopSelf();
+        }
     }
 
     @Override
@@ -65,8 +59,7 @@ public class OverlayService extends Service implements SensorEventListener {
                 .setContentIntent(notificationClickedIntent())
                 .setDeleteIntent(notificationDeletedIntent());
 
-        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
+        blockingManager = new BlockingManager(this);
         createInvisibleOverlayView();
     }
 
@@ -78,7 +71,7 @@ public class OverlayService extends Service implements SensorEventListener {
         super.onDestroy();
     }
 
-    private void switchState() {
+    private void toggleBlocking() {
         if (layout.getVisibility() == View.GONE) {
             startSmartBlocking();
         } else {
@@ -88,13 +81,13 @@ public class OverlayService extends Service implements SensorEventListener {
 
     private void startSmartBlocking() {
         showNotification(getString(R.string.disable_blocking));
-        sensorManager.registerListener(this, lightSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        blockingManager.startBlocking();
     }
 
     private void stopBlocking() {
         showNotification(getString(R.string.enable_blocking));
         layout.setVisibility(View.GONE);
-        sensorManager.unregisterListener(this);
+        blockingManager.stopBlocking();
     }
 
     private PendingIntent notificationClickedIntent() {
@@ -119,38 +112,11 @@ public class OverlayService extends Service implements SensorEventListener {
         notificationManager.notify(ID, notificationBuilder.setContentText(message).build());
     }
 
-    @Override
-    public void onSensorChanged(SensorEvent event) {
-        float proximity = event.values[0];
-
-        if (proximity < BLOCKING_PROXIMITY) {
-            if (!isScreenBlocked()) {
-                blockScreen();
-                Log.d(TAG, "onSensorChanged: blocked view");
-            }
-        } else {
-            if (isScreenBlocked()) {
-                unblockScreen();
-                Log.d(TAG, "onSensorChanged: unblocked view");
-            }
-        }
-        Log.d(TAG, "onSensorChanged: " + proximity);
-    }
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        //nop
-    }
-
-    private boolean isScreenBlocked() {
-        return layout.getVisibility() == View.VISIBLE;
-    }
-
-    private void blockScreen() {
+    public void blockScreen() {
         layout.setVisibility(View.VISIBLE);
     }
 
-    private void unblockScreen() {
+    public void unblockScreen() {
         layout.setVisibility(View.GONE);
     }
 }
