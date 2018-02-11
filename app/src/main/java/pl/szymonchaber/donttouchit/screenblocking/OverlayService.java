@@ -1,4 +1,4 @@
-package pl.szymonchaber.donttouchit;
+package pl.szymonchaber.donttouchit.screenblocking;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -14,6 +14,8 @@ import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+
+import pl.szymonchaber.donttouchit.R;
 
 public class OverlayService extends Service implements SensorEventListener {
 
