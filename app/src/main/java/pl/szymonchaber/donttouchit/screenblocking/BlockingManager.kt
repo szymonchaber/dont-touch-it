@@ -5,18 +5,21 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import pl.szymonchaber.donttouchit.screenblocking.OverlayService.BLOCKING_PROXIMITY
 
-internal class BlockingManager(private val overlayService: OverlayService) : SensorEventListener {
+internal class BlockingManager(context: Context, private val listener: OnShouldBlockListener) : SensorEventListener {
 
-    private val sensorManager: SensorManager = overlayService.getSystemService(Context.SENSOR_SERVICE) as SensorManager
+    private val sensorManager: SensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
     private val lightSensor: Sensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY)
 
+    var isBlocking = false
+
     fun startBlocking() {
+        isBlocking = true
         sensorManager.registerListener(this, lightSensor, SensorManager.SENSOR_DELAY_NORMAL)
     }
 
     fun stopBlocking() {
+        isBlocking = false
         sensorManager.unregisterListener(this)
     }
 
@@ -26,10 +29,15 @@ internal class BlockingManager(private val overlayService: OverlayService) : Sen
 
     override fun onSensorChanged(event: SensorEvent) {
         if (event.values[0] < BLOCKING_PROXIMITY) {
-            overlayService.blockScreen()
+            listener.blockScreen()
         } else {
-            overlayService.unblockScreen()
+            listener.unblockScreen()
         }
+    }
+
+    companion object {
+
+        const val BLOCKING_PROXIMITY = 8
     }
 }
 
