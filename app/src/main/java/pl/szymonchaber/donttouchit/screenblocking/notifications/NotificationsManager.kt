@@ -5,6 +5,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import pl.szymonchaber.donttouchit.MainActivity
 import pl.szymonchaber.donttouchit.R
 import pl.szymonchaber.donttouchit.screenblocking.OverlayService
 
@@ -12,10 +13,18 @@ internal class NotificationsManager(private val context: Context, private val li
 
     private val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-    private val notificationBuilder = Notification.Builder(context).setSmallIcon(android.R.drawable.btn_star)
-            .setContentTitle(context.getString(R.string.app_name))
-            .setContentIntent(notificationClickedIntent())
-            .setDeleteIntent(notificationDeletedIntent())
+    private val notificationBuilder: Notification.Builder
+
+    init {
+        val action = Notification.Action.Builder(R.drawable.ic_settings_black_24dp,
+                context.getString(R.string.notification_settings),
+                PendingIntent.getActivity(context, 0, Intent(context, MainActivity::class.java), 0)).build()
+        notificationBuilder = Notification.Builder(context).setSmallIcon(android.R.drawable.btn_star)
+                .setContentTitle(context.getString(R.string.app_name))
+                .setContentIntent(notificationClickedIntent())
+                .setDeleteIntent(notificationDeletedIntent())
+                .addAction(action)
+    }
 
     fun consumeAction(action: String?) {
         when (action) {

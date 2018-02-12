@@ -7,4 +7,5 @@
     <string name="main_mode_smart">Smart</string>
     <string name="main_mode_toggle">Toggle</string>
     <string name="main_start_blocking">Start blocking</string>
+    <string name="notification_settings">Settings</string>
 </resources>
