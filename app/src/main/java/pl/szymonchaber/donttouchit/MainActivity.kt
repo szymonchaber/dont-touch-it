@@ -6,19 +6,50 @@ import android.os.Bundle
 import android.provider.Settings
 import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatActivity
+import android.view.View
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import android.widget.Toast
 import pl.szymonchaber.donttouchit.permissions.OnPermissionResultListener
 import pl.szymonchaber.donttouchit.permissions.OverlayPermissionController
 import pl.szymonchaber.donttouchit.screenblocking.OverlayService
+import pl.szymonchaber.donttouchit.screenblocking.settings.BlockingMode.SMART
+import pl.szymonchaber.donttouchit.screenblocking.settings.BlockingMode.TOGGLE
+import pl.szymonchaber.donttouchit.screenblocking.settings.SettingsManager
 
 class MainActivity : AppCompatActivity(), OnPermissionResultListener {
 
     private lateinit var overlayPermissionController: OverlayPermissionController
+    private lateinit var settingsManager: SettingsManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main_menu)
         overlayPermissionController = OverlayPermissionController(this, this)
-        overlayPermissionController.getPermission()
+
+        settingsManager = SettingsManager(this)
+
+        when (settingsManager.getMode()) {
+            TOGGLE -> findViewById<RadioButton>(R.id.blockingModeToggle)
+            else -> findViewById<RadioButton>(R.id.blockingModeSmart)
+        }.isChecked = true
+
+        findViewById<RadioGroup>(R.id.blockingMode).setOnCheckedChangeListener { _, id ->
+            when (id) {
+                R.id.blockingModeToggle -> {
+                    settingsManager.setMode(TOGGLE)
+                }
+
+                R.id.blockingModeSmart -> {
+                    settingsManager.setMode(SMART)
+                }
+            }
+        }
+
+        findViewById<View>(R.id.startBlocking).setOnClickListener {
+            stopOverlayService()
+            overlayPermissionController.getPermission()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -43,8 +74,14 @@ class MainActivity : AppCompatActivity(), OnPermissionResultListener {
     }
 
     private fun startOverlayService() {
-        startService(Intent(this, OverlayService::class.java))
+        startService(createOverlayServiceIntent())
     }
+
+    private fun stopOverlayService() {
+        stopService(createOverlayServiceIntent())
+    }
+
+    private fun createOverlayServiceIntent() = Intent(this, OverlayService::class.java)
 
     companion object {
 

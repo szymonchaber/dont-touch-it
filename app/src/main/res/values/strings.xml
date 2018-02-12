@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Don\'t touch it!</string>
-    <string name="no_permission_no_overlay">Nie można uruchomić warstwy bez uprawnienia</string>
-    <string name="enable_blocking">Enable blocking</string>
-    <string name="disable_blocking">Disable blocking</string>
+    <string name="no_permission_no_overlay">Cannot enable blocking without overlay permission</string>
+    <string name="notification_enable_blocking">Enable blocking</string>
+    <string name="notification_disable_blocking">Disable blocking</string>
+    <string name="main_choose_blocking_mode">Blocking mode:</string>
+    <string name="main_mode_smart">Smart</string>
+    <string name="main_mode_toggle">Toggle</string>
+    <string name="main_start_blocking">Start blocking</string>
 </resources>

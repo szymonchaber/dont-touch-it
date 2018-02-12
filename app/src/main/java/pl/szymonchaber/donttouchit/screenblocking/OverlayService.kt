@@ -8,6 +8,10 @@ import android.view.View
 import android.view.WindowManager
 
 import pl.szymonchaber.donttouchit.R
+import pl.szymonchaber.donttouchit.screenblocking.blockingsignals.OnShouldBlockListener
+import pl.szymonchaber.donttouchit.screenblocking.notifications.NotificationsManager
+import pl.szymonchaber.donttouchit.screenblocking.notifications.OnNotificationActionListener
+import pl.szymonchaber.donttouchit.screenblocking.view.BackBlockingFrameLayout
 
 class OverlayService : Service(), OnShouldBlockListener, OnNotificationActionListener {
 
@@ -23,7 +27,7 @@ class OverlayService : Service(), OnShouldBlockListener, OnNotificationActionLis
         if (intent != null && intent.action != null) {
             notificationsManager.consumeAction(intent.action)
         } else {
-            showNotification(getString(R.string.enable_blocking))
+            showNotification(getString(R.string.notification_enable_blocking))
         }
         return super.onStartCommand(intent, flags, startId)
     }
@@ -50,12 +54,10 @@ class OverlayService : Service(), OnShouldBlockListener, OnNotificationActionLis
 
     override fun blockScreen() {
         layout.visibility = View.VISIBLE
-        showNotification(getString(R.string.disable_blocking))
     }
 
     override fun unblockScreen() {
         layout.visibility = View.GONE
-        showNotification(getString(R.string.enable_blocking))
     }
 
     private fun createInvisibleOverlayView() {
@@ -66,21 +68,22 @@ class OverlayService : Service(), OnShouldBlockListener, OnNotificationActionLis
 
     private fun toggleBlocking() {
         if (blockingManager.isBlocking) {
-            startBlocking()
-        } else {
             stopBlocking()
+        } else {
+            startBlocking()
         }
     }
 
     private fun startBlocking() {
-        showNotification(getString(R.string.disable_blocking))
+        showNotification(getString(R.string.notification_disable_blocking))
         blockingManager.startBlocking()
     }
 
-    private fun showNotification(message: String) = notificationsManager.notify(message)
-
     private fun stopBlocking() {
+        showNotification(getString(R.string.notification_enable_blocking))
         blockingManager.stopBlocking()
         layout.visibility = View.GONE
     }
+
+    private fun showNotification(message: String) = notificationsManager.notify(message)
 }

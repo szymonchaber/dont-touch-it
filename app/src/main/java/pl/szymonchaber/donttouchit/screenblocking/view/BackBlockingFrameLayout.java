@@ -1,4 +1,4 @@
-package pl.szymonchaber.donttouchit.screenblocking;
+package pl.szymonchaber.donttouchit.screenblocking.view;
 
 import android.content.Context;
 import android.graphics.PixelFormat;
@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
-class BackBlockingFrameLayout extends FrameLayout {
+public class BackBlockingFrameLayout extends FrameLayout {
 
     public BackBlockingFrameLayout(@NonNull Context context) {
         super(context);
