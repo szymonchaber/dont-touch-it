@@ -16,6 +16,7 @@ import pl.szymonchaber.donttouchit.screenblocking.OverlayService
 import pl.szymonchaber.donttouchit.screenblocking.settings.BlockingMode.SMART
 import pl.szymonchaber.donttouchit.screenblocking.settings.BlockingMode.TOGGLE
 import pl.szymonchaber.donttouchit.screenblocking.settings.SettingsManager
+import pl.szymonchaber.donttouchit.screenblocking.settings.SignalType
 
 class MainActivity : AppCompatActivity(), OnPermissionResultListener {
 
@@ -28,7 +29,13 @@ class MainActivity : AppCompatActivity(), OnPermissionResultListener {
         overlayPermissionController = OverlayPermissionController(this, this)
 
         settingsManager = SettingsManager(this)
+        restartBlocking()
 
+        setModeViews()
+        setSignalViews()
+    }
+
+    private fun setModeViews() {
         when (settingsManager.getMode()) {
             TOGGLE -> findViewById<RadioButton>(R.id.blockingModeToggle)
             else -> findViewById<RadioButton>(R.id.blockingModeSmart)
@@ -44,12 +51,43 @@ class MainActivity : AppCompatActivity(), OnPermissionResultListener {
                     settingsManager.setMode(SMART)
                 }
             }
+            setSignalViews()
+            restartBlocking()
+        }
+    }
+
+    private fun setSignalViews() {
+        val radioGroup = findViewById<RadioGroup>(R.id.blockingSignal)
+
+        if (settingsManager.getMode() == SMART) {
+            radioGroup.visibility = View.VISIBLE
+        } else {
+            radioGroup.visibility = View.GONE
         }
 
-        findViewById<View>(R.id.startBlocking).setOnClickListener {
-            stopOverlayService()
-            overlayPermissionController.getPermission()
+        when (settingsManager.getSignalType()) {
+            SignalType.PROXIMITY -> findViewById<RadioButton>(R.id.blockingByProximity)
+            else -> findViewById<RadioButton>(R.id.blockingByRotation)
+        }.isChecked = true
+
+
+        radioGroup.setOnCheckedChangeListener { _, id ->
+            when (id) {
+                R.id.blockingByProximity -> {
+                    settingsManager.setSignalType(SignalType.PROXIMITY)
+                }
+
+                R.id.blockingByRotation -> {
+                    settingsManager.setSignalType(SignalType.ROTATION)
+                }
+            }
+            restartBlocking()
         }
+    }
+
+    private fun restartBlocking() {
+        stopOverlayService()
+        overlayPermissionController.getPermission()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

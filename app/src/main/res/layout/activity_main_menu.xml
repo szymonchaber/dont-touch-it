@@ -1,54 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<LinearLayout
+
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/material_margin_double"
+    android:orientation="vertical">
 
-    android:padding="@dimen/material_margin_double">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/main_choose_blocking_mode"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
 
-    <LinearLayout
+    <RadioGroup
+        android:id="@+id/blockingMode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginTop="@dimen/material_margin">
 
-        <TextView
+        <RadioButton
+            android:id="@+id/blockingModeToggle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/main_choose_blocking_mode"
-            android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+            android:padding="@dimen/material_margin"
+            android:text="@string/main_mode_toggle"
+            tools:checked="true" />
 
-        <RadioGroup
-            android:id="@+id/blockingMode"
-            android:layout_width="match_parent"
+        <RadioButton
+            android:id="@+id/blockingModeSmart"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/material_margin">
+            android:padding="@dimen/material_margin"
+            android:text="@string/main_mode_smart" />
 
-            <RadioButton
-                android:id="@+id/blockingModeToggle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/material_margin"
-                android:text="@string/main_mode_toggle"
-                tools:checked="true" />
+    </RadioGroup>
 
-            <RadioButton
-                android:id="@+id/blockingModeSmart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/material_margin"
-                android:text="@string/main_mode_smart" />
-
-        </RadioGroup>
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/startBlocking"
-        android:layout_width="match_parent"
+    <RadioGroup
+        android:id="@+id/blockingSignal"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:padding="@dimen/material_margin_double"
-        android:text="@string/main_start_blocking" />
+        android:paddingLeft="@dimen/material_margin"
+        android:visibility="gone"
+        tools:visibility="visible">
 
-</FrameLayout>
+        <RadioButton
+            android:id="@+id/blockingByProximity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/material_margin"
+            android:text="@string/main_signal_proximity" />
+
+        <RadioButton
+            android:id="@+id/blockingByRotation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/material_margin"
+            android:text="@string/main_signal_rotation" />
+
+    </RadioGroup>
+
+</LinearLayout>

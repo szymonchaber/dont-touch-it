@@ -8,4 +8,6 @@
     <string name="main_mode_toggle">Toggle</string>
     <string name="main_start_blocking">Start blocking</string>
     <string name="notification_settings">Settings</string>
+    <string name="main_signal_proximity">On put in pocket</string>
+    <string name="main_signal_rotation">On rotated upside down</string>
 </resources>
