@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Don\'t touch it!</string>
+    <string name="app_name">Don\'t touch this!</string>
     <string name="no_permission_no_overlay">Cannot enable blocking without overlay permission</string>
     <string name="notification_enable_blocking">Enable blocking</string>
     <string name="notification_disable_blocking">Disable blocking</string>
