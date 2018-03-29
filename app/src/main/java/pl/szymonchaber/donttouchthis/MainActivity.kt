@@ -38,10 +38,9 @@ class MainActivity : AppCompatActivity(), OnPermissionResultListener {
     }
 
     private fun setModeViews() {
-        when (settingsManager.getMode()) {
-            TOGGLE -> findViewById<RadioButton>(R.id.blockingModeToggle)
-            else -> findViewById<RadioButton>(R.id.blockingModeSmart)
-        }.isChecked = true
+        val radioButtonToSetChecked: RadioButton =
+            if (settingsManager.getMode() == TOGGLE) findViewById(R.id.blockingModeToggle) else findViewById(R.id.blockingModeSmart)
+        radioButtonToSetChecked.isChecked = true
 
         findViewById<RadioGroup>(R.id.blockingMode).setOnCheckedChangeListener { _, id ->
             when (id) {
@@ -100,10 +99,14 @@ class MainActivity : AppCompatActivity(), OnPermissionResultListener {
 
     @TargetApi(Build.VERSION_CODES.M)
     override fun requestPermission() {
-        val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-            Uri.parse("package:" + packageName))
-        ActivityCompat.startActivityForResult(this, intent,
-            MainActivity.REQUEST_CODE_OVERLAY_PERMISSION, null)
+        val intent = Intent(
+            Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+            Uri.parse("package:" + packageName)
+        )
+        ActivityCompat.startActivityForResult(
+            this, intent,
+            MainActivity.REQUEST_CODE_OVERLAY_PERMISSION, null
+        )
     }
 
     override fun onPermissionGranted() {
