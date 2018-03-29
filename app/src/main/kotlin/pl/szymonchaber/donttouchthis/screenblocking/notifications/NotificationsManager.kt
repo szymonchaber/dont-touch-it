@@ -1,13 +1,13 @@
-package pl.szymonchaber.donttouchit.screenblocking.notifications
+package pl.szymonchaber.donttouchthis.screenblocking.notifications
 
 import android.app.Notification
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import pl.szymonchaber.donttouchit.MainActivity
-import pl.szymonchaber.donttouchit.R
-import pl.szymonchaber.donttouchit.screenblocking.OverlayService
+import pl.szymonchaber.donttouchthis.MainActivity
+import pl.szymonchaber.donttouchthis.R
+import pl.szymonchaber.donttouchthis.screenblocking.OverlayService
 
 internal class NotificationsManager(private val context: Context, private val listener: OnNotificationActionListener) {
 

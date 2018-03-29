@@ -1,4 +1,4 @@
-package pl.szymonchaber.donttouchit.screenblocking.notifications
+package pl.szymonchaber.donttouchthis.screenblocking.notifications
 
 interface OnNotificationActionListener {
 

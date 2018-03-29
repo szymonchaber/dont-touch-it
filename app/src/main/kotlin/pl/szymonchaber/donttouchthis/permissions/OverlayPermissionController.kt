@@ -1,4 +1,4 @@
-package pl.szymonchaber.donttouchit.permissions
+package pl.szymonchaber.donttouchthis.permissions
 
 import android.os.Build
 import android.provider.Settings

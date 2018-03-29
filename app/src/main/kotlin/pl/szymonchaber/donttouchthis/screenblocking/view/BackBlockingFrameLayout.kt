@@ -1,4 +1,4 @@
-package pl.szymonchaber.donttouchit.screenblocking.view
+package pl.szymonchaber.donttouchthis.screenblocking.view
 
 import android.content.Context
 import android.graphics.PixelFormat

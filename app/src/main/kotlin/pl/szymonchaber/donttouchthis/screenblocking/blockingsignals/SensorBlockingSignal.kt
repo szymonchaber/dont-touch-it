@@ -1,4 +1,4 @@
-package pl.szymonchaber.donttouchit.screenblocking.blockingsignals
+package pl.szymonchaber.donttouchthis.screenblocking.blockingsignals
 
 import android.content.Context
 import android.hardware.Sensor

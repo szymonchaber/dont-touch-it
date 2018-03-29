@@ -1,10 +1,10 @@
-package pl.szymonchaber.donttouchit.screenblocking
+package pl.szymonchaber.donttouchthis.screenblocking
 
 import android.content.Context
-import pl.szymonchaber.donttouchit.screenblocking.blockingsignals.BlockingSignal
-import pl.szymonchaber.donttouchit.screenblocking.blockingsignals.BlockingSignalAggregate
-import pl.szymonchaber.donttouchit.screenblocking.blockingsignals.OnShouldBlockListener
-import pl.szymonchaber.donttouchit.screenblocking.settings.SettingsManager
+import pl.szymonchaber.donttouchthis.screenblocking.blockingsignals.BlockingSignal
+import pl.szymonchaber.donttouchthis.screenblocking.blockingsignals.BlockingSignalAggregate
+import pl.szymonchaber.donttouchthis.screenblocking.blockingsignals.OnShouldBlockListener
+import pl.szymonchaber.donttouchthis.screenblocking.settings.SettingsManager
 
 class BlockingManager(context: Context, listener: OnShouldBlockListener) {
 

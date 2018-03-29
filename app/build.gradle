@@ -4,7 +4,7 @@ apply plugin: 'kotlin-android'
 android {
     compileSdkVersion 27
     defaultConfig {
-        applicationId "pl.szymonchaber.donttouchit"
+        applicationId "pl.szymonchaber.donttouchthis"
         minSdkVersion 21
         targetSdkVersion 27
         versionCode 2

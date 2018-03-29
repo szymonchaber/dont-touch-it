@@ -1,4 +1,4 @@
-package pl.szymonchaber.donttouchit.screenblocking
+package pl.szymonchaber.donttouchthis.screenblocking
 
 import android.app.Service
 import android.content.Context
@@ -7,11 +7,11 @@ import android.os.IBinder
 import android.view.View
 import android.view.WindowManager
 
-import pl.szymonchaber.donttouchit.R
-import pl.szymonchaber.donttouchit.screenblocking.blockingsignals.OnShouldBlockListener
-import pl.szymonchaber.donttouchit.screenblocking.notifications.NotificationsManager
-import pl.szymonchaber.donttouchit.screenblocking.notifications.OnNotificationActionListener
-import pl.szymonchaber.donttouchit.screenblocking.view.BackBlockingFrameLayout
+import pl.szymonchaber.donttouchthis.R
+import pl.szymonchaber.donttouchthis.screenblocking.blockingsignals.OnShouldBlockListener
+import pl.szymonchaber.donttouchthis.screenblocking.notifications.NotificationsManager
+import pl.szymonchaber.donttouchthis.screenblocking.notifications.OnNotificationActionListener
+import pl.szymonchaber.donttouchthis.screenblocking.view.BackBlockingFrameLayout
 
 class OverlayService : Service(), OnShouldBlockListener, OnNotificationActionListener {
 

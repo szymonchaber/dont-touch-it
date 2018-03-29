@@ -1,9 +1,9 @@
-package pl.szymonchaber.donttouchit.screenblocking.blockingsignals
+package pl.szymonchaber.donttouchthis.screenblocking.blockingsignals
 
 import android.content.Context
-import pl.szymonchaber.donttouchit.screenblocking.settings.BlockingMode
-import pl.szymonchaber.donttouchit.screenblocking.settings.SettingsManager
-import pl.szymonchaber.donttouchit.screenblocking.settings.SignalType
+import pl.szymonchaber.donttouchthis.screenblocking.settings.BlockingMode
+import pl.szymonchaber.donttouchthis.screenblocking.settings.SettingsManager
+import pl.szymonchaber.donttouchthis.screenblocking.settings.SignalType
 
 class BlockingSignalAggregate(settingsManager: SettingsManager, context: Context,
         shouldBlockListener: OnShouldBlockListener) : BlockingSignal(shouldBlockListener) {

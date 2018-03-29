@@ -1,4 +1,4 @@
-package pl.szymonchaber.donttouchit.screenblocking.settings
+package pl.szymonchaber.donttouchthis.screenblocking.settings
 
 import android.content.Context
 

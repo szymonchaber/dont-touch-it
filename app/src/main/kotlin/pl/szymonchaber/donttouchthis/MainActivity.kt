@@ -1,4 +1,4 @@
-package pl.szymonchaber.donttouchit
+package pl.szymonchaber.donttouchthis
 
 import android.annotation.TargetApi
 import android.content.Intent
@@ -12,13 +12,13 @@ import android.view.View
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
-import pl.szymonchaber.donttouchit.permissions.OnPermissionResultListener
-import pl.szymonchaber.donttouchit.permissions.OverlayPermissionController
-import pl.szymonchaber.donttouchit.screenblocking.OverlayService
-import pl.szymonchaber.donttouchit.screenblocking.settings.BlockingMode.SMART
-import pl.szymonchaber.donttouchit.screenblocking.settings.BlockingMode.TOGGLE
-import pl.szymonchaber.donttouchit.screenblocking.settings.SettingsManager
-import pl.szymonchaber.donttouchit.screenblocking.settings.SignalType
+import pl.szymonchaber.donttouchthis.permissions.OnPermissionResultListener
+import pl.szymonchaber.donttouchthis.permissions.OverlayPermissionController
+import pl.szymonchaber.donttouchthis.screenblocking.OverlayService
+import pl.szymonchaber.donttouchthis.screenblocking.settings.BlockingMode.SMART
+import pl.szymonchaber.donttouchthis.screenblocking.settings.BlockingMode.TOGGLE
+import pl.szymonchaber.donttouchthis.screenblocking.settings.SettingsManager
+import pl.szymonchaber.donttouchthis.screenblocking.settings.SignalType
 
 class MainActivity : AppCompatActivity(), OnPermissionResultListener {
 
