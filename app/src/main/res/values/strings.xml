@@ -11,4 +11,5 @@
     <string name="main_signal_proximity">On put in pocket</string>
     <string name="main_signal_rotation">On rotated upside down</string>
     <string name="title_activity_main">Don\'t Touch This!</string>
+    <string name="channel_name">Screen blocking control</string>
 </resources>
