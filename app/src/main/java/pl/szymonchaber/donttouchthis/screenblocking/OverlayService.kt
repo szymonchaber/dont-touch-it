@@ -1,9 +1,12 @@
 package pl.szymonchaber.donttouchthis.screenblocking
 
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.os.IBinder
+import android.os.SystemClock
 import android.view.View
 import android.view.WindowManager
 
@@ -29,7 +32,15 @@ class OverlayService : Service(), OnShouldBlockListener, OnNotificationActionLis
         } else {
             showNotification(getString(R.string.notification_enable_blocking))
         }
-        return super.onStartCommand(intent, flags, startId)
+        return Service.START_STICKY
+    }
+
+    override fun onTaskRemoved(rootIntent: Intent) {
+        val intent = Intent(applicationContext, OverlayService::class.java)
+        val pendingIntent = PendingIntent.getService(this, 1, intent, PendingIntent.FLAG_ONE_SHOT)
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        alarmManager.set(AlarmManager.RTC_WAKEUP, SystemClock.elapsedRealtime() + 1000, pendingIntent)
+        super.onTaskRemoved(rootIntent)
     }
 
     override fun onCreate() {
