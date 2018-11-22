@@ -8,8 +8,8 @@ android {
         applicationId "pl.szymonchaber.donttouchthis"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 3
-        versionName "0.4"
+        versionCode 4
+        versionName "0.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
